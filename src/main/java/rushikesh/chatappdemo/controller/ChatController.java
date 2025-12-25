@@ -20,8 +20,15 @@ public class ChatController {
     @MessageMapping("/chat")
     public void send(ChatMessage message, Principal principal) {
 
+        if (principal == null) {
+            System.out.println("❌ Principal is NULL");
+            return;
+        }
+
         String sender = principal.getName();
         String receiver = message.getReceiver();
+
+        System.out.println("📨 WS MESSAGE: " + sender + " -> " + receiver);
 
         Message saved = messageService.save(
                 sender,
@@ -42,5 +49,6 @@ public class ChatController {
         );
     }
 }
+
 
 
